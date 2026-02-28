@@ -1,5 +1,5 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { FileText, BarChart2, LogOut } from 'lucide-react';
+import { FileText, BarChart2, LogOut, Settings, Users } from 'lucide-react';
 
 export default function AdminLayout({ user, onLogout }: { user: any, onLogout: () => void }) {
   const location = useLocation();

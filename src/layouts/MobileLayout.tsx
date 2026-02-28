@@ -29,23 +29,23 @@ export default function MobileLayout({ user, onLogout }: { user: any, onLogout: 
 
       {/* Bottom Navigation */}
       <nav className="absolute bottom-0 left-0 right-0 bg-white border-t border-neutral-100 flex justify-around items-center py-2 pb-safe z-20">
-        <Link
-          to="/"
+        <Link 
+          to="/" 
           className={`flex flex-col items-center p-2 rounded-xl transition-colors ${location.pathname === '/' ? 'text-orange-500' : 'text-neutral-400 hover:text-neutral-600'}`}
         >
           <Home size={24} strokeWidth={location.pathname === '/' ? 2.5 : 2} />
           <span className="text-[10px] mt-1 font-medium">首页</span>
         </Link>
-        <Link
-          to="/playlist"
+        <Link 
+          to="/playlist" 
           className={`flex flex-col items-center p-2 rounded-xl transition-colors ${location.pathname === '/playlist' ? 'text-orange-500' : 'text-neutral-400 hover:text-neutral-600'}`}
         >
           <Headphones size={24} strokeWidth={location.pathname === '/playlist' ? 2.5 : 2} />
           <span className="text-[10px] mt-1 font-medium">播客</span>
         </Link>
         {user.role === 'admin' && (
-          <Link
-            to="/admin"
+          <Link 
+            to="/admin" 
             className="flex flex-col items-center p-2 rounded-xl transition-colors text-neutral-400 hover:text-neutral-600"
           >
             <User size={24} strokeWidth={2} />
