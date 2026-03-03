@@ -13,36 +13,24 @@ export default function Login({ onLogin }: { onLogin: (user: any) => void }) {
       .then(data => setDemoEnabled(data.demo_enabled !== false))
       .catch(() => setDemoEnabled(true));
 
-    // Check for Feishu callback code in URL
+    // Check for Feishu OAuth redirect result
     const params = new URLSearchParams(window.location.search);
-    const code = params.get('code');
-    if (code) {
-      handleFeishuCallback(code);
+    const feishuUser = params.get('feishu_user');
+    const loginError = params.get('login_error');
+    if (feishuUser) {
+      try {
+        const user = JSON.parse(feishuUser);
+        // Clean URL
+        window.history.replaceState({}, '', '/');
+        onLogin(user);
+      } catch (e) {
+        setError('飞书登录数据解析失败');
+      }
+    } else if (loginError) {
+      setError('飞书登录失败，请重试');
+      window.history.replaceState({}, '', '/');
     }
   }, []);
-
-  const handleFeishuCallback = async (code: string) => {
-    setLoading(true);
-    setError('');
-    try {
-      const res = await fetch('/api/auth/feishu/callback', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code })
-      });
-      const data = await res.json();
-      if (data.user) {
-        onLogin(data.user);
-      } else {
-        setError('飞书登录失败，请重试');
-      }
-    } catch (err) {
-      console.error('Feishu login failed', err);
-      setError('飞书登录失败，请重试');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleFeishuLogin = async () => {
     setLoading(true);
